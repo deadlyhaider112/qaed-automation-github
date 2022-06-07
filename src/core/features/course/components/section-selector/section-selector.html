@@ -1,0 +1,73 @@
+<ion-header>
+    <ion-toolbar>
+        <h2 id="core-course-section-selector-label">List Of Modules</h2>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="closeModal()" [attr.aria-label]="'core.close' | translate">
+                <ion-icon slot="icon-only" name="fas-times" aria-hidden="true"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-card *ngFor="let s of sec   ; let i = index">
+        <ion-card-header color="light" [attr.aria-current]="selected?.id == s.data.id ? 'page' : 'false'"
+            [class.item-dimmed]="s.data.visible === 0 || s.data.uservisible === false" detail="false"
+            [attr.aria-hidden]="s.data.uservisible === false" button>
+            <ion-grid class="ion-no-padding">
+                <ion-row class="ion-align-items-end">
+                    <ion-col size="3">
+                        <div>
+                            <ion-avatar *ngIf="s.data.unitIcon" slot="start" class="course_image">
+                                <img [src]="s.data.unitIcon" core-external-content alt="" />
+                            </ion-avatar>
+                        </div>
+                    </ion-col>
+                    <ion-col size="7" class="ion-align-self-center">
+                        <!-- <ion-card-title> -->
+                        <a ion-button class="content_area" (click)="selectSection(s.data)"
+                            [style.background]="s.data.availabilityinfo ? '#c2c9ca' : ''">
+                            <core-format-text [text]="s.data.name" contextLevel="course"
+                                [contextInstanceId]="course?.id">
+                            </core-format-text>
+                        </a>
+                    </ion-col>
+                    <ion-col size="2" class="ion-align-self-center">
+                        <div class="ion_icon" *ngIf="s.children.length > 0">
+                            <ion-button slot="end" fill="clear" (click)="expandItem(s.data)">
+                                <ion-icon slot="icon-only" name="far-angle-down" aria-hidden="true">
+                                </ion-icon>
+                            </ion-button>
+                        </div>
+                    </ion-col>
+
+                    <!-- </ion-card-title> -->
+                </ion-row>
+            </ion-grid>
+
+
+        </ion-card-header>
+        <ion-card-content class="acc_cont" *ngIf="s.children.length > 0">
+            <ng-container *ngFor="let x of s.children">
+                <app-expandable expandHeight="300px" [expanded]="s.data.expanded">
+                    <ion-list lines="full">
+                        <a ion-button class="content_area" (click)="selectSection(x.data)">
+                            <ion-item [attr.aria-current]="selected?.id == x.data.id ? 'page' : 'false'"
+                                [class.item-dimmed]="x.data.visible === 0 || x.data.uservisible === false"
+                                detail="false" [attr.aria-hidden]="x.data.uservisible === false" button>
+                                <ion-icon name="fas-chevron-right" slot="start" aria-hidden="true"></ion-icon>
+                                <ion-label class="ion-text-wrap"> {{ x.data.name }}
+
+
+                                </ion-label>
+
+                            </ion-item>
+                        </a>
+
+                    </ion-list>
+                </app-expandable>
+            </ng-container>
+        </ion-card-content>
+
+    </ion-card>
+
+</ion-content>

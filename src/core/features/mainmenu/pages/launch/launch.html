@@ -1,0 +1,237 @@
+<ion-header [hidden]="!showHeader" no-shadow no-border>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button [text]="'core.back' | translate"></ion-back-button>
+        </ion-buttons>
+        <h1>
+            <core-format-text [text]="title" contextLevel="coursecat"
+                [contextInstanceId]="currentCategory && currentCategory!.id">
+            </core-format-text>
+        </h1>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="home_page">
+        <ion-refresher slot="fixed" [disabled]="!categoriesLoaded" (ionRefresh)="refreshCategories($event.target)">
+            <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
+        </ion-refresher>
+        <core-loading [hideUntil]="categoriesLoaded">
+
+            <ion-grid [hidden]="!showBanner">
+                <ion-row>
+                    <ion-col>
+                        <span class="text-muted">Welcome, </span>
+                        <div class="header_user_name">{{siteInfo?.fullname}}</div>
+                    </ion-col>
+                    <ion-col>
+                        <div class='user_image'>
+                            <core-user-avatar [user]="siteInfo" slot="start"></core-user-avatar>
+                        </div>
+                    </ion-col>
+
+                </ion-row>
+
+            </ion-grid>
+
+            <ion-grid>
+                <ion-row class="user_course-brief_info" [hidden]="!showBanner">
+                    <ion-col size="12">
+                        <div class="banner"> <img src="assets/img/banner.png" class="img-responsive"></div>
+                    </ion-col>
+                    <ion-col size="12">
+                        <ion-text color="muted">Learn from Basics </ion-text>
+                        <h3 class="home_title mt-0">AEO Leadership Programme</h3>
+                    </ion-col>
+                    <!-- <ion-col size="4">
+                        <ion-button color="success" (click)="certificateRegistration()" expand="outline"
+                            class="ion-text-wrap">Certificate Registration</ion-button>
+                    </ion-col> -->
+                    <ion-col size="12">
+
+                        <div [hidden]="!showBanner" class="card course_brief">
+                            <div class="course_card_title">Course Brief</div>
+                            <ion-row>
+                                <ion-col size="4">
+                                    <ion-icon name="time"></ion-icon>
+                                    <div class="content_course">
+                                        <div class="course_title">Last Login</div>
+                                        <div style="font-size: 15px;" class="course_content"><strong>{{ lastlogintime
+                                                }}</strong></div>
+                                    </div>
+                                </ion-col>
+                                <ion-col size="8">
+                                    <ion-icon name="logo-youtube"></ion-icon>
+                                    <div class="content_course">
+                                        <div class="course_title">Total Time Spent</div>
+                                        <div style="font-size: 15px;" class="course_content"><strong>{{ coursespenttime
+                                                }}</strong></div>
+                                    </div>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="currentCategory && currentCategory!.description">
+                    <ion-col size="12">
+                        <div class="card course_brief">
+                            <div class="course_card_title" style="margin-bottom:0px !important">Introduction</div>
+                            <!-- <ion-row> -->
+                                <ion-col size="12">
+                                    <p style="color: #999; margin-top: 0">
+                                        <core-format-text [text]="currentCategory!.description" contextLevel="coursecat"
+                                            [contextInstanceId]="currentCategory.id">
+                                        </core-format-text>
+                                    </p>
+
+                                    <!-- <p style="color: #999; margin-top: 0; " [innerHTML]="currentCategory!.description">
+                                    </p> -->
+                                </ion-col>
+                            <!-- </ion-row> -->
+                        </div>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12" *ngIf="currentCategory && currentCategory!.description">
+                        <div class="card disclaimer">
+                            <div class="course_card_title">Certificate Eligibility</div>
+                            <ion-row>
+                                <ion-col size="12">
+                                    <!-- <core-format-text [text]="currentCategory!.description" contextLevel="coursecat"
+                                        [contextInstanceId]="currentCategory.id">
+                                    </core-format-text> -->
+                                    <!-- <p style="color: #999; margin-top: 0;" [innerHTML]="disclaimer_text"></p> -->
+                                    <p style="color: #999; margin-top: 0; ">
+                                        You can obtain two kinds of certificates upon completion of the AEO Leadership
+                                        Programme. The eligibility criteria is as follows:<br /><br />
+                                        <strong>Certificate of Completion</strong>: You will be able to access and
+                                        download the Certificate of Completion if you complete all six modules and score
+                                        at least 30% on each including all check-point and end of unit
+                                        quizzes.<br /><br />
+                                        <strong>Certificate of Achievement</strong>: You will be able to access and
+                                        download the Certificate of Achievement if you complete all six modules and
+                                        score at least 60% on each module and on each check-point and end of unit quiz
+                                        within each module.
+                                    </p>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <div class="start_course" [hidden]="!showStartCourse">
+                    <a expand="block" (click)="openCategory(16)" ion-button type="submit" class="primary_button">
+                        Start Course
+                        <div class="cust_icon">
+                            <ion-icon name="arrow-forward-outline"></ion-icon>
+                        </div>
+                    </a>
+                </div>
+            </ion-grid>
+
+
+            <!-- <ion-item *ngIf="currentCategory" class="ion-text-wrap">
+            <ion-icon name="fas-folder" slot="start" [attr.aria-label]="'core.category' | translate"></ion-icon>
+            <ion-label>
+                <h2>
+                    <core-format-text [text]="currentCategory!.name" contextLevel="coursecat"
+                    [contextInstanceId]="currentCategory!.id"></core-format-text>
+                </h2>
+            </ion-label>
+        </ion-item> -->
+            <!-- <ion-item class="ion-text-wrap" *ngIf="currentCategory && currentCategory!.description">
+            <ion-label>
+                <h2>
+                    <core-format-text [text]="currentCategory!.description" maxHeight="500" contextLevel="coursecat"
+                        [contextInstanceId]="currentCategory!.id"></core-format-text>
+                </h2>
+            </ion-label>
+        </ion-item> -->
+            <!-- <div *ngIf="categories.length > 0">
+            <ion-item-divider>
+                <ion-label>
+                    <h2>{{ 'core.courses.categories' | translate }}</h2>
+                </ion-label>
+            </ion-item-divider>
+            <section *ngFor="let category of categories">
+                <ion-item button class="ion-text-wrap" (click)="openCategory(category.id)"
+                    [attr.aria-label]="category.name" detail="true">
+                    <ion-icon name="fas-folder" slot="start" [attr.aria-label]="'core.category' | translate"></ion-icon>
+                    <ion-label>
+                        <h2>
+                            <core-format-text [text]="category.name" contextLevel="coursecat"
+                                [contextInstanceId]="category.id">
+                            </core-format-text>
+                        </h2>
+                    </ion-label>
+                    <ion-badge slot="end" *ngIf="category.coursecount > 0" color="light">
+                        <span aria-hidden="true">{{ category.coursecount }}</span>
+                        <span class="sr-only">{{ 'core.courses.therearecourses' | translate:{ $a: category.coursecount }
+                            }}</span>
+                    </ion-badge>
+                </ion-item>
+            </section>
+        </div> -->
+
+            <div *ngIf="courses.length > 0" class="course_module_main">
+                <!-- <ion-row> -->
+
+                <div class="performance_indicator">
+                    <div class="w-50 p_card_title">
+                        Overall Progress
+                    </div>
+                    <!-- <div class="w-50 p_progress">
+                                <img src="assets/img/progress_main.png" />
+                            </div> -->
+                    <core-progress-bar [progress]="coursecompletionprogress"></core-progress-bar>
+                </div>
+                <!-- <div  *ngIf="!categories.length && !courses.length"> -->
+
+                <!-- </div> -->
+
+
+                <ion-row>
+                    <ion-col size="12" class="ion-text-center click_to_module">Click on the desired modules to launch:
+                    </ion-col>
+                </ion-row>
+                <!-- <ion-item-divider>
+                    <ion-label>
+                        <h2>{{ 'core.courses.courses' | translate }}</h2>
+                    </ion-label>
+                </ion-item-divider> -->
+                <!-- <ion-row> -->
+                <core-courses-course-list-item *ngFor="let course of courses" [course]="course">
+                </core-courses-course-list-item>
+                <!-- </ion-row> -->
+            </div>
+            <core-empty-box *ngIf="!categories.length && !courses.length" icon="fas-graduation-cap"
+                [message]="'core.courses.nocoursesyet' | translate">
+            </core-empty-box>
+        </core-loading>
+
+
+    </div>
+</ion-content>
+
+<!-- </div> -->
+
+<!-- <ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button [text]="'core.back' | translate"></ion-back-button>
+        </ion-buttons>
+        <h1>
+            sjs
+            <core-format-text [text]="siteName" contextLevel="system" [contextInstanceId]="0"></core-format-text>
+            <img src="assets/img/top_logo.png" class="core-header-logo" [alt]="siteName">
+        </h1>
+        <ion-buttons slot="end">
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<core-loading [hideUntil]="loaded">
+    <core-empty-box *ngIf="tabs.length == 0" icon="fas-home" [message]="'core.courses.nocourses' | translate"></core-empty-box>
+</core-loading>
+<core-tabs-outlet *ngIf="tabs.length > 0" [selectedIndex]="selectedTab" [hideUntil]="loaded" [tabs]="tabs"
+    (ionChange)="tabSelected()">
+</core-tabs-outlet> -->

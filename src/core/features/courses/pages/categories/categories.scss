@@ -1,0 +1,44 @@
+@import "~theme/globals.scss";
+
+.home_page {
+  background: #fff;
+  overflow-y: auto;
+
+  .course_module_main {
+    padding: 10px 5px;
+    overflow-y: auto;
+
+    .performance_indicator {
+      width: 100%;
+      display: block;
+      background: #f4f5f8;
+      padding: 10px 15px;
+      overflow: hidden;
+      border-radius: 8px;
+
+      .p_card_title {
+        float: left;
+        //width: 50%;
+        font-size: 22px;
+        font-weight: 600;
+        //padding: 30px 5px;
+        @media screen and (max-width: 360px) {
+          font-size: 18px;
+        }
+      }
+
+      .p_progress {
+        float: right;
+        width: 50%;
+        padding: 12px 25px;
+        @media screen and (max-width: 360px) {
+          padding: 12px 15px;
+        }
+      }
+    }
+  }
+}
+
+.timetable-button {
+  margin-top: 10px;
+}

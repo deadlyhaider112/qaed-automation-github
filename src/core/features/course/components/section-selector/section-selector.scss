@@ -1,0 +1,108 @@
+@import "~theme/globals.scss";
+// core-progress-bar {
+//     --bar-margin: 8px 0 4px 0;
+//     --line-height: 20px;
+// }
+
+// @if ($core-hide-progress-on-section-selector) {
+//     core-progress-bar {
+//         display: none;
+//     }
+// }
+
+// ion-badge {
+//     text-align: start;
+// }
+// .acc_list {
+//     // border: 1px solid #ddd;
+//     background: #f7f7f7;
+//     // border-radius: 8px;
+//     padding-left: 60px;
+//     padding-right: 30px;
+//     // margin:0 15px;
+//     // padding: 15px 20px;
+//     display: block;
+//     // margin-bottom: 15px;
+//     .ion_icon {
+//         position: absolute;
+//         z-index: 9999;
+//         top: -18px;
+//         right: -22px;
+//     }
+// }
+.acc_cont {
+    padding: 0px;
+    .fa {
+        margin-right: 10px;
+        color: #00aabf;
+    }
+    ion-icon {
+        color: #00aabf;
+    }
+}
+ion-content {
+    --ion-background-color: #fff;
+
+    .icon {
+        position: absolute;
+        width: 40px;
+        top: 50%;
+        left: -50px;
+        margin-top: -20px;
+    }
+    core-format-text {
+        font-size: 18px !important;
+        // width: 90%;
+    }
+}
+.unitlist_view {
+    overflow-y: auto;
+    .click_to_module {
+        color: #4b4c4f;
+        font-weight: 600;
+        font-size: 18px;
+        margin: 10px 0;
+        @media screen and (max-width: 360px) {
+            font-size: 14px;
+        }
+    }
+    .arrow_back_icon {
+        float: left;
+        width: 20px;
+        font-size: 20px;
+        margin-top: 3px;
+    }
+    .home_icon {
+        float: right;
+        width: 20px;
+        font-size: 20px;
+        margin-top: 3px;
+    }
+    .unit_modules {
+        ul {
+            li {
+                width: 50%;
+                float: left;
+                padding: 8px;
+                .content_area {
+                    background: #dcf6f9;
+                    padding: 19px;
+                    text-align: center;
+                    font-weight: 600;
+                    border-radius: 14px;
+                    border: 1px solid #6db7bf;
+                    display: block;
+                    min-height: 200px;
+
+                    .unit_name {
+                        color: #00aabf;
+                        font-weight: normal;
+                    }
+                    .unit_title {
+                        color: #05707d;
+                    }
+                }
+            }
+        }
+    }
+}

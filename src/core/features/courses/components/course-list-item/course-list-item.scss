@@ -1,0 +1,136 @@
+@import "~theme/globals";
+
+:host {
+    .course-icon {
+        color: white;
+        background: var(--gray-light);
+        padding: 8px;
+        font-size: 24px;
+        border-radius: 50%;
+        margin-inline-end: 16px;
+        -webkit-transition: all 50ms ease-in-out;
+        transition: all 50ms ease-in-out;
+    }
+
+    @for $i from 0 to length($core-course-image-background) {
+        ion-icon[course-color="#{$i}"] {
+            color: var(--core-course-color-#{$i});
+        }
+    }
+
+    ion-avatar {
+        -webkit-transition: all 50ms ease-in-out;
+        transition: all 50ms ease-in-out;
+    }
+}
+
+.course_module_main {
+    ion-progress-bar {
+        border-radius: 10px;
+        height: 8px;
+    }
+    padding: 10px;
+    ion-avatar {
+        width: 80px;
+        height: auto;
+        border-radius: 0;
+        img {
+            border-radius: 0;
+        }
+    }
+    ion-item {
+        --border-width: 0;
+        --inner-border-width: 0;
+    }
+    overflow-y: auto;
+    .click_to_module {
+        color: #4b4c4f;
+        font-size: 18px;
+        margin: 10px 0;
+        @media screen and (max-width: 360px) {
+            font-size: 14px;
+        }
+    }
+    .arrow_back_icon {
+        float: left;
+        width: 20px;
+        font-size: 20px;
+        margin-top: 3px;
+    }
+    .bookmark_icon {
+        float: right;
+        width: 20px;
+        font-size: 20px;
+        margin-top: 3px;
+    }
+    .performance_indicator {
+        margin-top: 30px;
+        width: 100%;
+        display: block;
+        background: #f3f5f9;
+        padding: 10px 15px 30px;
+        overflow: hidden;
+        border-radius: 8px;
+        ion-progress-bar {
+            height: 15px;
+        }
+        .p_card_title {
+            font-size: 22px;
+            font-weight: 600;
+            padding: 10px 5px 0;
+            @media screen and (max-width: 360px) {
+                font-size: 18px;
+            }
+        }
+        .p_progress {
+            float: right;
+            width: 50%;
+            padding: 12px 25px;
+            @media screen and (max-width: 360px) {
+                padding: 12px 15px;
+            }
+        }
+    }
+}
+
+.course_modules {
+    // border: 1px solid #ddd;
+    // border-radius: 8px;
+    //padding: 5px 15px 5px 0px;
+    // overflow: hidden;
+    // margin-bottom: 10px;
+    // border-radius: 8px;
+    overflow: hidden;
+    margin: 10px 6px 15px 4px;
+    box-shadow: 4px 5px 10px #d1d1d1, -5px -5px 10px #ffff;
+    ion-avatar {
+        width: 120px;
+        height: auto;
+    }
+    .item-inner {
+        border-bottom: 0px !important;
+    }
+    .course_info {
+        float: right;
+        width: 72%;
+
+        .course_module_name {
+            color: #7a7c82;
+            display: block;
+        }
+        .course_name {
+            font-size: 17px;
+            font-weight: 600;
+            // margin-bottom: 10px;
+            display: block;
+        }
+        .percentage_comp {
+            color: #00aabf;
+            font-size: 12px;
+            .progress,
+            .progress-indeterminate {
+                background: #00aabf !important ;
+            }
+        }
+    }
+}

@@ -1,0 +1,385 @@
+<ion-header [hidden]="!showHeader" no-shadow no-border>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button [text]="'core.back' | translate"></ion-back-button>
+        </ion-buttons>
+        <h1>
+            <core-format-text [text]="title" contextLevel="coursecat"
+                              [contextInstanceId]="currentCategory && currentCategory!.id">
+            </core-format-text>
+        </h1>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <div class="home_page">
+        <ion-refresher slot="fixed" [disabled]="!categoriesLoaded" (ionRefresh)="refreshCategories($event.target)">
+            <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
+        </ion-refresher>
+        <core-loading [hideUntil]="categoriesLoaded">
+            <ion-grid style="padding: 10px 10px 5px 10px">
+                <ion-row>
+                    <ion-col>
+                        <span class="text-muted">Hello, </span>
+                        <div class="header_user_name">{{siteInfo?.fullname}}</div>
+                    </ion-col>
+                    <ion-col>
+                        <div class='user_image'>
+                            <core-user-avatar [user]="siteInfo" slot="start"></core-user-avatar>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <ion-grid>
+                <ion-row style="color: #a8acaf;padding-left: 10px;margin-top: 5px;">
+                    Learn from Basics
+                </ion-row>
+                <ion-row class="user_course-brief_info">
+                    <ion-col size="12">
+                        <div class="card course_brief">
+                            <div class="course_card_title">List of Enrolled Trainings</div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <div *ngIf="categories.length > 0">
+                    <section class="home_content">
+                        <div *ngFor="let category of enrolledCategories">
+                            <ion-card>
+                                <img style="width: 100%;" [src]="category.training_icon"/>
+                                <ion-card-content class="ion-no-padding ion-border">
+                                    <ion-list lines="none">
+                                        <ion-item>
+                                            <ion-label ion-no-border relative>
+                                                <h2>
+                                                    <core-format-text [text]="category.name" contextLevel="coursecat"
+                                                                      [contextInstanceId]="category.id">
+                                                    </core-format-text>
+                                                </h2>
+                                                <p>
+                                                    <core-format-text [text]="category.description"
+                                                                      contextLevel="coursecat"
+                                                                      [contextInstanceId]="category.id">
+                                                    </core-format-text>
+                                                </p>
+                                            </ion-label>
+                                        </ion-item>
+
+                                        <ion-item>
+                                            <ion-row style="width: 100%;" class="ion-no-padding">
+                                                <ion-col size="4" class="ion-no-padding">
+                                                    <ion-row style="width: 100%" class="ion-no-padding">
+                                                        <ion-text style="color: #bababa;font-size: 12px">
+                                                            Start Date
+                                                        </ion-text>
+                                                    </ion-row>
+
+                                                    <ion-row style="width: 100%" class="ion-no-padding">
+                                                        <ion-text color="primary" style="font-size: 12px">
+                                                            {{category.training_start_date}}
+                                                        </ion-text>
+                                                    </ion-row>
+                                                </ion-col>
+                                                <ion-col size="4" class="ion-no-padding">
+                                                    <ion-row style="width: 100%" class="ion-no-padding">
+                                                        <ion-text style="color: #bababa;font-size: 12px">
+                                                            End Date
+                                                        </ion-text>
+                                                    </ion-row>
+
+                                                    <ion-row style="width: 100%" class="ion-no-padding">
+                                                        <ion-text color="primary" style="font-size: 12px">
+                                                            {{category.training_end_date}}
+                                                        </ion-text>
+                                                    </ion-row>
+                                                </ion-col>
+                                                <ion-col size="4" class="ion-no-padding">
+                                                    <ion-row style="width: 100%" class="ion-no-padding">
+                                                        <ion-text style="color: #bababa;font-size: 12px">
+                                                            Level
+                                                        </ion-text>
+                                                    </ion-row>
+
+                                                    <ion-row style="width: 100%" class="ion-no-padding">
+                                                        <ion-text color="primary"
+                                                                  style="font-size: 12px;text-transform: capitalize;">
+                                                            {{category.training_level}}
+                                                        </ion-text>
+                                                    </ion-row>
+                                                </ion-col>
+                                            </ion-row>
+                                        </ion-item>
+
+                                        <ion-item button color="primary" (click)="openCategory(category.id)">
+                                            <ion-label>
+                                                Enter Course
+                                            </ion-label>
+                                            <ion-badge slot="end" color="light">{{ category.coursecount }}
+                                            </ion-badge>
+                                        </ion-item>
+                                    </ion-list>
+                                </ion-card-content>
+                            </ion-card>
+                        </div>
+
+                        <ion-row style="width: 100%"
+                                 *ngIf="!enrolledCategories.length && !enrolledCategories.length">
+                            <ion-row style="width: 100%" class="ion-justify-content-center">
+                                <ion-icon color="black" name="fas-graduation-cap"
+                                          style="font-size: xxx-large"></ion-icon>
+                            </ion-row>
+                            <ion-row style="width: 100%" class="ion-justify-content-center">
+                                <ion-text>No Enrolled Trainings</ion-text>
+                            </ion-row>
+                        </ion-row>
+
+                        <!--                        <ion-card *ngFor="let category of categories" class="training-card">-->
+                        <!--                            <ion-row style="width: 100%; padding: 10px 10px 5px 10px" class="ion-no-margin">-->
+                        <!--                                <ion-col size="4" class="ion-no-padding">-->
+                        <!--                                    <img [src]="category.training_icon">-->
+                        <!--                                </ion-col>-->
+                        <!--                                <ion-col style="padding-left: 10px" size="8" class="ion-no-padding">-->
+                        <!--                                    <ion-row style="width: 100%">-->
+                        <!--                                        <ion-text-->
+                        <!--                                                style="font-weight: bold; font-size: 16px">{{category.name}}</ion-text>-->
+                        <!--                                    </ion-row>-->
+
+                        <!--                                    <ion-row style="width: 100%;margin-top: 15px;" class="ion-no-padding">-->
+                        <!--                                        <ion-col size="4" class="ion-no-padding">-->
+                        <!--                                            <ion-row style="width: 100%" class="ion-no-padding">-->
+                        <!--                                                <ion-text style="color: #bababa;font-size: 12px">-->
+                        <!--                                                    Start Date-->
+                        <!--                                                </ion-text>-->
+                        <!--                                            </ion-row>-->
+
+                        <!--                                            <ion-row style="width: 100%" class="ion-no-padding">-->
+                        <!--                                                <ion-text color="primary" style="font-size: 12px">-->
+                        <!--                                                    25-03-2022-->
+                        <!--                                                </ion-text>-->
+                        <!--                                            </ion-row>-->
+                        <!--                                        </ion-col>-->
+                        <!--                                        <ion-col size="4" class="ion-no-padding">-->
+                        <!--                                            <ion-row style="width: 100%" class="ion-no-padding">-->
+                        <!--                                                <ion-text style="color: #bababa;font-size: 12px">-->
+                        <!--                                                    End Date-->
+                        <!--                                                </ion-text>-->
+                        <!--                                            </ion-row>-->
+
+                        <!--                                            <ion-row style="width: 100%" class="ion-no-padding">-->
+                        <!--                                                <ion-text color="primary" style="font-size: 12px">-->
+                        <!--                                                    23-04-2022-->
+                        <!--                                                </ion-text>-->
+                        <!--                                            </ion-row>-->
+                        <!--                                        </ion-col>-->
+                        <!--                                        <ion-col size="4" class="ion-no-padding">-->
+                        <!--                                            <ion-row style="width: 100%" class="ion-no-padding">-->
+                        <!--                                                <ion-text style="color: #bababa;font-size: 12px">-->
+                        <!--                                                    Venue-->
+                        <!--                                                </ion-text>-->
+                        <!--                                            </ion-row>-->
+
+                        <!--                                            <ion-row style="width: 100%" class="ion-no-padding">-->
+                        <!--                                                <ion-text color="primary" style="font-size: 12px">-->
+                        <!--                                                    QAED-->
+                        <!--                                                </ion-text>-->
+                        <!--                                            </ion-row>-->
+                        <!--                                        </ion-col>-->
+                        <!--                                    </ion-row>-->
+
+                        <!--                                    <ion-row style="width: 100%;margin-top: 15px;">-->
+                        <!--                                        <ion-text style="width: 100%;color: #bababa">{{category.description}}</ion-text>-->
+                        <!--                                    </ion-row>-->
+
+                        <!--                                    <ion-row class="ion-justify-content-end" style="margin-top: 5px">-->
+                        <!--                                        <ion-text style="color: #bababa;font-size: 12px">80%</ion-text>-->
+                        <!--                                    </ion-row>-->
+
+                        <!--                                    <ion-progress-bar value="0.8"-->
+                        <!--                                                      style="min-height: 8px;border-radius: 10px;margin-top: 5px;">-->
+
+                        <!--                                    </ion-progress-bar>-->
+
+                        <!--                                </ion-col>-->
+                        <!--                            </ion-row>-->
+                        <!--                        </ion-card>-->
+                    </section>
+                </div>
+
+                <ion-row class="user_course-brief_info" style="margin-top: 20px;">
+                    <ion-col size="12">
+                        <div class="card course_brief">
+                            <div class="course_card_title">Upcoming Trainings</div>
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <div *ngIf="categories.length > 0">
+                    <section class="home_content">
+                        <ion-card *ngFor="let category of upcomingCategories">
+                            <img style="width: 100%;" [src]="category.training_icon"/>
+                            <ion-card-content class="ion-no-padding ion-border">
+                                <ion-list lines="none">
+                                    <ion-item>
+                                        <ion-label ion-no-border relative>
+                                            <h2>
+                                                <core-format-text [text]="category.name" contextLevel="coursecat"
+                                                                  [contextInstanceId]="category.id">
+                                                </core-format-text>
+                                            </h2>
+                                            <p>
+                                                <core-format-text [text]="category.description" contextLevel="coursecat"
+                                                                  [contextInstanceId]="category.id">
+                                                </core-format-text>
+                                            </p>
+                                        </ion-label>
+                                    </ion-item>
+
+                                    <ion-item>
+                                        <ion-row style="width: 100%;" class="ion-no-padding">
+                                            <ion-col size="4" class="ion-no-padding">
+                                                <ion-row style="width: 100%" class="ion-no-padding">
+                                                    <ion-text style="color: #bababa;font-size: 12px">
+                                                        Start Date
+                                                    </ion-text>
+                                                </ion-row>
+
+                                                <ion-row style="width: 100%" class="ion-no-padding">
+                                                    <ion-text color="primary" style="font-size: 12px">
+                                                        {{category.training_start_date}}
+                                                    </ion-text>
+                                                </ion-row>
+                                            </ion-col>
+                                            <ion-col size="4" class="ion-no-padding">
+                                                <ion-row style="width: 100%" class="ion-no-padding">
+                                                    <ion-text style="color: #bababa;font-size: 12px">
+                                                        End Date
+                                                    </ion-text>
+                                                </ion-row>
+
+                                                <ion-row style="width: 100%" class="ion-no-padding">
+                                                    <ion-text color="primary" style="font-size: 12px">
+                                                        {{category.training_end_date}}
+                                                    </ion-text>
+                                                </ion-row>
+                                            </ion-col>
+                                            <ion-col size="4" class="ion-no-padding">
+                                                <ion-row style="width: 100%" class="ion-no-padding">
+                                                    <ion-text style="color: #bababa;font-size: 12px">
+                                                        Level
+                                                    </ion-text>
+                                                </ion-row>
+
+                                                <ion-row style="width: 100%" class="ion-no-padding">
+                                                    <ion-text color="primary"
+                                                              style="font-size: 12px;text-transform: capitalize">
+                                                        {{category.training_level}}
+                                                    </ion-text>
+                                                </ion-row>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-item>
+
+                                    <ion-item button color="primary" (click)="presentSuccessDialog()">
+                                        <ion-label>
+                                            Apply
+                                        </ion-label>
+                                    </ion-item>
+                                </ion-list>
+                            </ion-card-content>
+                        </ion-card>
+
+                        <ion-row style="width: 100%"
+                                 *ngIf="!upcomingCategories.length && !upcomingCategories.length">
+                            <ion-row style="width: 100%" class="ion-justify-content-center">
+                                <ion-icon color="black" name="fas-graduation-cap"
+                                          style="font-size: xxx-large"></ion-icon>
+                            </ion-row>
+                            <ion-row style="width: 100%" class="ion-justify-content-center">
+                                <ion-text>No Upcoming Trainings</ion-text>
+                            </ion-row>
+                        </ion-row>
+
+                        <!--                        <core-empty-box *ngIf="!upcomingCategories.length && !upcomingCategories.length"-->
+                        <!--                                        icon="fas-graduation-cap"-->
+                        <!--                                        [message]="'No Upcoming Trainings'">-->
+                        <!--                        </core-empty-box>-->
+
+                        <!--                        <ion-card *ngFor="let category of categories" class="training-card">-->
+                        <!--                            <ion-row style="width: 100%; padding: 10px 10px 5px 10px" class="ion-no-margin">-->
+                        <!--                                <ion-col size="4" class="ion-no-padding">-->
+                        <!--                                    <img [src]="category.training_icon">-->
+                        <!--                                </ion-col>-->
+                        <!--                                <ion-col style="padding-left: 10px" size="8" class="ion-no-padding">-->
+                        <!--                                    <ion-row style="width: 100%">-->
+                        <!--                                        <ion-text-->
+                        <!--                                                style="font-weight: bold; font-size: 16px">{{category.name}}</ion-text>-->
+                        <!--                                    </ion-row>-->
+
+                        <!--                                    <ion-row style="width: 100%;margin-top: 15px;" class="ion-no-padding">-->
+                        <!--                                        <ion-col size="4" class="ion-no-padding">-->
+                        <!--                                            <ion-row style="width: 100%" class="ion-no-padding">-->
+                        <!--                                                <ion-text style="color: #bababa;font-size: 12px">-->
+                        <!--                                                    Start Date-->
+                        <!--                                                </ion-text>-->
+                        <!--                                            </ion-row>-->
+
+                        <!--                                            <ion-row style="width: 100%" class="ion-no-padding">-->
+                        <!--                                                <ion-text color="primary" style="font-size: 12px">-->
+                        <!--                                                    25-03-2022-->
+                        <!--                                                </ion-text>-->
+                        <!--                                            </ion-row>-->
+                        <!--                                        </ion-col>-->
+                        <!--                                        <ion-col size="4" class="ion-no-padding">-->
+                        <!--                                            <ion-row style="width: 100%" class="ion-no-padding">-->
+                        <!--                                                <ion-text style="color: #bababa;font-size: 12px">-->
+                        <!--                                                    End Date-->
+                        <!--                                                </ion-text>-->
+                        <!--                                            </ion-row>-->
+
+                        <!--                                            <ion-row style="width: 100%" class="ion-no-padding">-->
+                        <!--                                                <ion-text color="primary" style="font-size: 12px">-->
+                        <!--                                                    23-04-2022-->
+                        <!--                                                </ion-text>-->
+                        <!--                                            </ion-row>-->
+                        <!--                                        </ion-col>-->
+                        <!--                                        <ion-col size="4" class="ion-no-padding">-->
+                        <!--                                            <ion-row style="width: 100%" class="ion-no-padding">-->
+                        <!--                                                <ion-text style="color: #bababa;font-size: 12px">-->
+                        <!--                                                    Venue-->
+                        <!--                                                </ion-text>-->
+                        <!--                                            </ion-row>-->
+
+                        <!--                                            <ion-row style="width: 100%" class="ion-no-padding">-->
+                        <!--                                                <ion-text color="primary" style="font-size: 12px">-->
+                        <!--                                                    QAED-->
+                        <!--                                                </ion-text>-->
+                        <!--                                            </ion-row>-->
+                        <!--                                        </ion-col>-->
+                        <!--                                    </ion-row>-->
+
+                        <!--                                    <ion-row style="width: 100%;margin-top: 15px;">-->
+                        <!--                                        <ion-text style="width: 100%;color: #bababa">{{category.description}}</ion-text>-->
+                        <!--                                    </ion-row>-->
+
+                        <!--                                    <ion-row class="ion-justify-content-end" style="margin-top: 5px">-->
+                        <!--                                        <ion-text style="color: #bababa;font-size: 12px">80%</ion-text>-->
+                        <!--                                    </ion-row>-->
+
+                        <!--                                    <ion-progress-bar value="0.8"-->
+                        <!--                                                      style="min-height: 8px;border-radius: 10px;margin-top: 5px;">-->
+
+                        <!--                                    </ion-progress-bar>-->
+
+                        <!--                                </ion-col>-->
+                        <!--                            </ion-row>-->
+                        <!--                        </ion-card>-->
+                    </section>
+                </div>
+            </ion-grid>
+
+            <core-empty-box *ngIf="!categories.length && !courses.length" icon="fas-graduation-cap"
+                            [message]="'core.courses.nocoursesyet' | translate">
+            </core-empty-box>
+        </core-loading>
+    </div>
+</ion-content>

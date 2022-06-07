@@ -1,0 +1,56 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button [text]="'core.back' | translate"></ion-back-button>
+        </ion-buttons>
+        <h1 style="margin-bottom: 0px;">
+            <core-format-text [text]="title" contextLevel="coursecat"
+                              [contextInstanceId]="currentCategory && currentCategory!.id">
+            </core-format-text>
+        </h1>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <div class="home_page">
+        <ion-refresher slot="fixed" [disabled]="!categoriesLoaded" (ionRefresh)="refreshCategories($event.target)">
+            <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
+        </ion-refresher>
+        <core-loading [hideUntil]="categoriesLoaded">
+
+            <div class="course_module_main">
+                <div class="performance_indicator">
+                    <div class="w-50 p_card_title">
+                        Overall Progresss
+                    </div>
+                    <ion-row style="width: 100%;margin-top: 30px;">
+                        Progress
+                    </ion-row>
+                    <core-progress-bar [progress]="coursecompletionprogress"></core-progress-bar>
+                    <!--                    <div class="w3-light-grey w3-round">-->
+                    <!--                        <div class="w3-container w3-round w3-blue" style="width:{{coursecompletionprogress}}%">25%</div>-->
+                    <!--                    </div>-->
+                </div>
+
+                <ion-row class="ion-justify-content-end">
+                    <ion-button (click)="presentTimeTableModal()"
+                                class="timetable-button" color="primary" mode="ios">
+                        TimeTable & Guidelines
+                    </ion-button>
+                </ion-row>
+
+                <ion-row style="width: 100%;margin-top: 5px;">
+                    <ion-text style="font-size: large;color: #4b4c4e">
+                        Click on the desired training to launch:
+                    </ion-text>
+
+                </ion-row>
+
+                <core-courses-course-list-item *ngFor="let course of courses" [course]="course">
+                </core-courses-course-list-item>
+            </div>
+            <core-empty-box *ngIf="!categories.length && !courses.length" icon="fas-graduation-cap"
+                            [message]="'core.courses.nocoursesyet' | translate">
+            </core-empty-box>
+        </core-loading>
+    </div>
+</ion-content>

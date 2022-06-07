@@ -1,0 +1,107 @@
+/*
+ * App Global variables SCSS
+ * ----------------------------------------------------------------------------
+ * Place here the different files you should import to use global variables.
+ */
+
+$font-path: "../assets/fonts";
+$assets-path: "../assets";
+@import "./globals.mixins.scss";
+@import "./globals.mixins.ionic.scss";
+@import "./globals.custom.scss";
+@import "./globals.variables.scss";
+
+body {
+  --background: transparent;
+  white-space: normal;
+  color: #333;
+  font-weight: 500;
+}
+
+core-format-text ul li {
+  font-size: 14px !important;
+  margin-bottom: 10px;
+}
+
+ion-title,
+.ion-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1, h2, h3, h4, h5, h6,
+h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {
+  color: #00aabf;
+  font-weight: 700 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 12px;
+}
+
+iframe {
+  border-radius: 10px;
+}
+
+a.primary_button {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+  text-align: center;
+  color: #fff;
+  background: #00aabf;
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #01a2b8;
+}
+
+a.disable {
+  background: #e5e5e5;
+  border: 1px solid #ddd;
+  pointer-events: none;
+  color: #abacb4;
+}
+
+.list-unstyled {
+  padding: 0;
+  list-style-type: none;
+}
+
+.form-control {
+  padding: 0px 15px !important;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.bullets {
+  text-align: left !important;
+
+  li {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px !important;
+    margin: 0 0 15px;
+    text-align: left;
+  }
+}
+
+.consent .modal-wrapper {
+  background: #222;
+}
+
+.my-custom-modal-class {
+  --backdrop-opacity: 0.5 !important;
+
+  .modal-wrapper {
+    --height: 15% !important;
+    --width: 92% !important;
+    --border-radius: 15px;
+    position: absolute;
+    background: white;
+  }
+}
