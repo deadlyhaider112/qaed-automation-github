@@ -51,6 +51,8 @@ export class TimeTableComponent {
     weekOfMonth = 0;
     dayOfWeek = 0;
 
+    role: any;
+
     constructor(public modalController: ModalController, public navParams: NavParams) {
         this.selectedDateTime = new Date().toISOString();
         // @ts-ignore
@@ -58,6 +60,7 @@ export class TimeTableComponent {
         console.log(this.allSessionsList);
         this.categoryId = this.navParams.get('categoryId');
         console.log(this.navParams.get('categoryId'));
+        this.role = localStorage.getItem('user_role');
         this.onChangeDate();
     }
 

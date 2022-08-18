@@ -98,6 +98,7 @@ export class CoreMainMenuHomePage implements OnInit {
         this.intro = 'AEO is a mobile administrator who supervises the performance of school in his markaz. Each AEO is assigned 15 to 22 schools, collectedly called markaz, for routine supervision and management. An AEO is the judge on the performance of his/her markaz across a combination of access and quality indicators.';
 
         this.fetchCategories().finally(() => {
+            console.log(this.categories);
             for (let i = 0; i < this.categories.length; i++) {
                 if (this.categories[i].is_upcoming == '1') {
                     this.upcomingCategories.push(this.categories[i]);

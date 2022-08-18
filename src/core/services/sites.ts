@@ -389,7 +389,13 @@ export class CoreSitesProvider {
             if (typeof data.token != 'undefined') {
                 console.log(data);
 
-                return {token: data.token, siteUrl, privateToken: data.privatetoken, sessions: data.sessions};
+                return {
+                    token: data.token,
+                    siteUrl,
+                    privateToken: data.privatetoken,
+                    sessions: data.sessions,
+                    role: data.role
+                };
             } else {
                 if (typeof data.error != 'undefined') {
                     // We only allow one retry (to avoid loops).
@@ -1768,6 +1774,8 @@ export type CoreSiteUserTokenResponse = {
     privateToken?: string;
 
     sessions: any;
+
+    role: any;
 };
 
 /**
@@ -1931,4 +1939,5 @@ export type CoreSitesLoginTokenResponse = {
     debuginfo?: string;
     reproductionlink?: string;
     sessions?: string;
+    role?: string;
 };

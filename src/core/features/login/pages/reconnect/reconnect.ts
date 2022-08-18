@@ -198,7 +198,18 @@ export class CoreLoginReconnectPage implements OnInit, OnDestroy {
             const data = await CoreSites.getUserToken(this.siteUrl, this.username, password);
             console.log('Final DATA: ', data);
 
-            localStorage.setItem('course_sessions', JSON.stringify(data.sessions));
+            if (data.sessions == null) {
+                let sessionsArray = [];
+                localStorage.setItem('course_sessions', JSON.stringify(sessionsArray));
+            } else {
+                localStorage.setItem('course_sessions', JSON.stringify(data.sessions));
+            }
+
+            if (data.role == null) {
+                localStorage.setItem('user_role', '0');
+            } else {
+                localStorage.setItem('user_role', data.role);
+            }
 
             await CoreSites.updateSiteToken(this.siteUrl, this.username, data.token, data.privateToken);
 

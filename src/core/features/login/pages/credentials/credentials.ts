@@ -277,6 +277,12 @@ export class CoreLoginCredentialsPage implements OnInit, OnDestroy {
             } else {
                 localStorage.setItem('course_sessions', JSON.stringify(data.sessions));
             }
+
+            if (data.role == null) {
+                localStorage.setItem('user_role', '0');
+            } else {
+                localStorage.setItem('user_role', data.role);
+            }
             const id = await CoreSites.newSite(data.siteUrl, data.token, data.privateToken);
 
             // Reset fields so the data is not in the view anymore.

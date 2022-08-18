@@ -16,7 +16,7 @@
         <ion-refresher slot="fixed" [disabled]="!categoriesLoaded" (ionRefresh)="refreshCategories($event.target)">
             <ion-refresher-content pullingText="{{ 'core.pulltorefresh' | translate }}"></ion-refresher-content>
         </ion-refresher>
-        <core-loading [hideUntil]="categoriesLoaded">
+        <core-loading [hideUntil]="categoriesLoaded" >
             <ion-grid style="padding: 10px 10px 5px 10px">
                 <ion-row>
                     <ion-col>
@@ -45,18 +45,98 @@
                 <div *ngIf="categories.length > 0">
                     <section class="home_content">
                         <div *ngFor="let category of enrolledCategories">
-                            <ion-card>
+                            <ion-card style="box-shadow: none;border-radius: 18px;border: 1px solid #aaafb3">
                                 <img style="width: 100%;" [src]="category.training_icon"/>
                                 <ion-card-content class="ion-no-padding ion-border">
                                     <ion-list lines="none">
+                                        <!--                                        <ion-item>-->
+                                        <!--                                            <ion-label ion-no-border relative-->
+                                        <!--                                                       style="margin-top: 0px; margin-bottom: 0px;">-->
+                                        <!--                                                <h2 style="color: black">-->
+                                        <!--                                                    <core-format-text [text]="category.name" contextLevel="coursecat"-->
+                                        <!--                                                                      [contextInstanceId]="category.id">-->
+                                        <!--                                                    </core-format-text>-->
+                                        <!--                                                </h2>-->
+                                        <!--                                            </ion-label>-->
+                                        <!--                                        </ion-item>-->
+
+                                        <ion-row style="width: 100%;padding-left: 16px;margin-top: 10px;">
+                                            <ion-col size="10.5" class="ion-no-padding">
+                                                <ion-text color="black"
+                                                          style="font-weight: bold;font-size: 15px">{{category.name}}</ion-text>
+                                            </ion-col>
+                                            <ion-col size="1.5" class="ion-no-padding">
+                                                <ion-row style="height: 100%"
+                                                         class="ion-align-items-center ion-justify-content-center">
+                                                    <div class="circle">2</div>
+                                                </ion-row>
+                                            </ion-col>
+                                        </ion-row>
+
+                                        <ion-item style="margin-top: 10px">
+                                            <ion-row style="width: 100%;" class="ion-no-padding">
+                                                <ion-col size="4" class="ion-no-padding">
+                                                    <ion-row style="width: 100%" class="ion-no-padding">
+                                                        <ion-text style="color: #a1a1a1;font-size: 12px">
+                                                            Start Date
+                                                        </ion-text>
+                                                    </ion-row>
+
+                                                    <ion-row style="width: 100%" class="ion-no-padding">
+                                                        <ion-text
+                                                                style="font-size: 12px;color: #0c8b51;font-weight: bold">
+                                                            {{category.training_start_date}}
+                                                        </ion-text>
+                                                    </ion-row>
+                                                </ion-col>
+                                                <ion-col size="4" class="ion-no-padding">
+                                                    <ion-row style="width: 100%" class="ion-no-padding">
+                                                        <ion-text style="color: #a1a1a1;font-size: 12px">
+                                                            End Date
+                                                        </ion-text>
+                                                    </ion-row>
+
+                                                    <ion-row style="width: 100%" class="ion-no-padding">
+                                                        <ion-text
+                                                                style="font-size: 12px;color: #0c8b51;font-weight: bold">
+                                                            {{category.training_end_date}}
+                                                        </ion-text>
+                                                    </ion-row>
+                                                </ion-col>
+                                                <ion-col size="4" class="ion-no-padding">
+                                                    <ion-row style="width: 100%" class="ion-no-padding">
+                                                        <ion-text style="color: #a1a1a1;font-size: 12px">
+                                                            Training Level
+                                                        </ion-text>
+                                                    </ion-row>
+
+                                                    <ion-row style="width: 100%" class="ion-no-padding">
+                                                        <ion-text
+                                                                style="font-size: 12px;text-transform: capitalize;color: #0c8b51;font-weight: bold">
+                                                            {{category.training_level}}
+                                                        </ion-text>
+                                                    </ion-row>
+                                                </ion-col>
+                                                <ion-col size="4" class="ion-no-padding">
+                                                    <ion-row style="width: 100%" class="ion-no-padding">
+                                                        <ion-text style="color: #a1a1a1;font-size: 12px">
+                                                            Training Venue
+                                                        </ion-text>
+                                                    </ion-row>
+
+                                                    <ion-row style="width: 100%" class="ion-no-padding">
+                                                        <ion-text
+                                                                style="font-size: 12px;text-transform: capitalize;color: #0c8b51;font-weight: bold">
+                                                            {{category.training_level}}
+                                                        </ion-text>
+                                                    </ion-row>
+                                                </ion-col>
+                                            </ion-row>
+                                        </ion-item>
+
                                         <ion-item>
                                             <ion-label ion-no-border relative>
-                                                <h2>
-                                                    <core-format-text [text]="category.name" contextLevel="coursecat"
-                                                                      [contextInstanceId]="category.id">
-                                                    </core-format-text>
-                                                </h2>
-                                                <p>
+                                                <p style="color: #868a8f">
                                                     <core-format-text [text]="category.description"
                                                                       contextLevel="coursecat"
                                                                       [contextInstanceId]="category.id">
@@ -65,57 +145,13 @@
                                             </ion-label>
                                         </ion-item>
 
-                                        <ion-item>
-                                            <ion-row style="width: 100%;" class="ion-no-padding">
-                                                <ion-col size="4" class="ion-no-padding">
-                                                    <ion-row style="width: 100%" class="ion-no-padding">
-                                                        <ion-text style="color: #bababa;font-size: 12px">
-                                                            Start Date
-                                                        </ion-text>
-                                                    </ion-row>
-
-                                                    <ion-row style="width: 100%" class="ion-no-padding">
-                                                        <ion-text color="primary" style="font-size: 12px">
-                                                            {{category.training_start_date}}
-                                                        </ion-text>
-                                                    </ion-row>
-                                                </ion-col>
-                                                <ion-col size="4" class="ion-no-padding">
-                                                    <ion-row style="width: 100%" class="ion-no-padding">
-                                                        <ion-text style="color: #bababa;font-size: 12px">
-                                                            End Date
-                                                        </ion-text>
-                                                    </ion-row>
-
-                                                    <ion-row style="width: 100%" class="ion-no-padding">
-                                                        <ion-text color="primary" style="font-size: 12px">
-                                                            {{category.training_end_date}}
-                                                        </ion-text>
-                                                    </ion-row>
-                                                </ion-col>
-                                                <ion-col size="4" class="ion-no-padding">
-                                                    <ion-row style="width: 100%" class="ion-no-padding">
-                                                        <ion-text style="color: #bababa;font-size: 12px">
-                                                            Level
-                                                        </ion-text>
-                                                    </ion-row>
-
-                                                    <ion-row style="width: 100%" class="ion-no-padding">
-                                                        <ion-text color="primary"
-                                                                  style="font-size: 12px;text-transform: capitalize;">
-                                                            {{category.training_level}}
-                                                        </ion-text>
-                                                    </ion-row>
-                                                </ion-col>
-                                            </ion-row>
-                                        </ion-item>
-
-                                        <ion-item button color="primary" (click)="openCategory(category.id)">
+                                        <ion-item button color="primary" (click)="openCategory(category.id)"
+                                                  style="text-align: center">
                                             <ion-label>
                                                 Enter Course
                                             </ion-label>
-                                            <ion-badge slot="end" color="light">{{ category.coursecount }}
-                                            </ion-badge>
+                                            <!--                                            <ion-badge slot="end" color="light">{{ category.coursecount }}-->
+                                            <!--                                            </ion-badge>-->
                                         </ion-item>
                                     </ion-list>
                                 </ion-card-content>
@@ -215,63 +251,78 @@
 
                 <div *ngIf="categories.length > 0">
                     <section class="home_content">
-                        <ion-card *ngFor="let category of upcomingCategories">
-                            <img style="width: 100%;" [src]="category.training_icon"/>
+                        <ion-card *ngFor="let category of upcomingCategories"
+                                  style="box-shadow: none;border-radius: 18px;border: 1px solid #aaafb3">
+                            <!--                            <img style="width: 100%;" [src]="category.training_icon"/>-->
                             <ion-card-content class="ion-no-padding ion-border">
                                 <ion-list lines="none">
-                                    <ion-item>
-                                        <ion-label ion-no-border relative>
-                                            <h2>
-                                                <core-format-text [text]="category.name" contextLevel="coursecat"
-                                                                  [contextInstanceId]="category.id">
-                                                </core-format-text>
-                                            </h2>
-                                            <p>
-                                                <core-format-text [text]="category.description" contextLevel="coursecat"
-                                                                  [contextInstanceId]="category.id">
-                                                </core-format-text>
-                                            </p>
-                                        </ion-label>
-                                    </ion-item>
+                                    <ion-row style="width: 100%;padding-left: 16px;margin-top: 10px;">
+                                        <ion-col size="10.5" class="ion-no-padding">
+                                            <ion-text color="black"
+                                                      style="font-weight: bold;font-size: 15px">{{category.name}}</ion-text>
+                                        </ion-col>
+                                        <ion-col size="1.5" class="ion-no-padding">
+                                            <ion-row style="height: 100%"
+                                                     class="ion-align-items-center ion-justify-content-center">
+                                                <div class="circle">2</div>
+                                            </ion-row>
+                                        </ion-col>
+                                    </ion-row>
 
                                     <ion-item>
                                         <ion-row style="width: 100%;" class="ion-no-padding">
                                             <ion-col size="4" class="ion-no-padding">
                                                 <ion-row style="width: 100%" class="ion-no-padding">
-                                                    <ion-text style="color: #bababa;font-size: 12px">
+                                                    <ion-text style="color: #a1a1a1;font-size: 12px">
                                                         Start Date
                                                     </ion-text>
                                                 </ion-row>
 
                                                 <ion-row style="width: 100%" class="ion-no-padding">
-                                                    <ion-text color="primary" style="font-size: 12px">
+                                                    <ion-text color="primary"
+                                                              style="font-size: 12px;color: #0c8b51;font-weight: bold">
                                                         {{category.training_start_date}}
                                                     </ion-text>
                                                 </ion-row>
                                             </ion-col>
                                             <ion-col size="4" class="ion-no-padding">
                                                 <ion-row style="width: 100%" class="ion-no-padding">
-                                                    <ion-text style="color: #bababa;font-size: 12px">
+                                                    <ion-text style="color: #a1a1a1;font-size: 12px">
                                                         End Date
                                                     </ion-text>
                                                 </ion-row>
 
                                                 <ion-row style="width: 100%" class="ion-no-padding">
-                                                    <ion-text color="primary" style="font-size: 12px">
+                                                    <ion-text color="primary"
+                                                              style="font-size: 12px;color: #0c8b51;font-weight: bold">
                                                         {{category.training_end_date}}
                                                     </ion-text>
                                                 </ion-row>
                                             </ion-col>
                                             <ion-col size="4" class="ion-no-padding">
                                                 <ion-row style="width: 100%" class="ion-no-padding">
-                                                    <ion-text style="color: #bababa;font-size: 12px">
-                                                        Level
+                                                    <ion-text style="color: #a1a1a1;font-size: 12px">
+                                                        Training Level
                                                     </ion-text>
                                                 </ion-row>
 
                                                 <ion-row style="width: 100%" class="ion-no-padding">
                                                     <ion-text color="primary"
-                                                              style="font-size: 12px;text-transform: capitalize">
+                                                              style="font-size: 12px;color: #0c8b51;font-weight: bold">
+                                                        {{category.training_level}}
+                                                    </ion-text>
+                                                </ion-row>
+                                            </ion-col>
+                                            <ion-col size="4" class="ion-no-padding">
+                                                <ion-row style="width: 100%" class="ion-no-padding">
+                                                    <ion-text style="color: #a1a1a1;font-size: 12px">
+                                                        Training Venue
+                                                    </ion-text>
+                                                </ion-row>
+
+                                                <ion-row style="width: 100%" class="ion-no-padding">
+                                                    <ion-text color="primary"
+                                                              style="font-size: 12px;color: #0c8b51;font-weight: bold">
                                                         {{category.training_level}}
                                                     </ion-text>
                                                 </ion-row>
@@ -279,7 +330,18 @@
                                         </ion-row>
                                     </ion-item>
 
-                                    <ion-item button color="primary" (click)="presentSuccessDialog()">
+                                    <ion-item>
+                                        <ion-label ion-no-border relative>
+                                            <p style="color: #868a8f">
+                                                <core-format-text [text]="category.description" contextLevel="coursecat"
+                                                                  [contextInstanceId]="category.id">
+                                                </core-format-text>
+                                            </p>
+                                        </ion-label>
+                                    </ion-item>
+
+                                    <ion-item button style="text-align: center" color="primary"
+                                              (click)="presentSuccessDialog()">
                                         <ion-label>
                                             Apply
                                         </ion-label>
